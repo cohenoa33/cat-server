@@ -8,6 +8,7 @@ dotenv.config();
 const PORT = process.env.PORT || 300;
 // Import Routes
 const authRoute = require("./routes/auth");
+const postRoute = require("./routes/posts");
 
 // connect to DB
 mongoose.connect(
@@ -20,6 +21,7 @@ mongoose.connect(
 app.use(express.json());
 // Route Middleware
 app.use("/api/user", authRoute);
+app.use("/api/posts", postRoute);
 
 app.listen(
   PORT,
