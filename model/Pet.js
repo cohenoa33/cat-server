@@ -8,7 +8,8 @@ const petSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
-  }
+  },
+  feedings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Feeding" }]
 });
 
 module.exports = mongoose.model("Pets", petSchema);

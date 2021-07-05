@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 8,
     max: 1024
-  }
+  },
+  pets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }]
 });
 
 module.exports = mongoose.model("User", userSchema);
