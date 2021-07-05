@@ -1,15 +1,11 @@
 const express = require("express");
 const app = express();
-// Database connection
-const mongoose = require("mongoose");
-// Import environment variables
+
 const dotenv = require("dotenv");
 dotenv.config();
-const PORT = process.env.PORT || 300;
-// Import Routes
-const authRoute = require("./routes/auth");
-const postRoute = require("./routes/posts");
 
+// Database connection
+const mongoose = require("mongoose");
 // connect to DB
 mongoose.connect(
   process.env.DB_CONNECT,
@@ -17,12 +13,19 @@ mongoose.connect(
   () => console.log("\x1b[36m%s\x1b[0m", "Connected to DB")
 );
 
+const PORT = process.env.PORT || 8000;
+// Import Routes
+const authRoute = require("./routes/auth");
+const petsRoute = require("./routes/pet");
+const feedingRoute = require("./routes/feeding");
+
 // Middleware
 app.use(express.json());
+
 // Route Middleware
 app.use("/api/user", authRoute);
-app.use("/api/posts", postRoute);
-
+app.use("/api/pets", petsRoute);
+app.use("/api/feedings", feedingRoute);
 app.listen(
   PORT,
   console.log("\x1b[35m%s\x1b[0m", `⚡️[server]: Running at port:${PORT}`)

@@ -3,8 +3,12 @@ const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const { loginValidation, registerValidation } = require("./validation");
+const {
+  loginValidation,
+  registerValidation
+} = require("../helpers/validation");
 
+//REGISTER
 router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -22,9 +26,10 @@ router.post("/register", async (req, res) => {
   });
 
   try {
-    console.log("User saved to DB");
+    const savedUser = await user.save();
     res.send({ user: user._id });
   } catch (err) {
+    console.log(err);
     res.status(400).send(err);
   }
 });
@@ -41,7 +46,7 @@ router.post("/login", async (req, res) => {
   if (!validPassword) return res.status(400).send("Password is wrong");
 
   const token = jwt.sign({ _id: user._id }, process.env.ACCESS_TOKEN_SECRET);
-  res.header("authorization", token).send(token);
+  res.header("authorization", token).send({ user: user._id });
 });
 
 module.exports = router;
