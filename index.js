@@ -16,6 +16,7 @@ mongoose.connect(
 const PORT = process.env.PORT || 8000;
 // Import Routes
 const authRoute = require("./routes/auth");
+const userRote = require("./routes/user");
 const petsRoute = require("./routes/pet");
 const feedingRoute = require("./routes/feeding");
 
@@ -23,6 +24,7 @@ const feedingRoute = require("./routes/feeding");
 app.use(express.json());
 
 // Route Middleware
+app.use("/api", userRote);
 app.use("/api/user", authRoute);
 app.use("/api/pets", petsRoute);
 app.use("/api/feedings", feedingRoute);

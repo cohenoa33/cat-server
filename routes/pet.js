@@ -5,7 +5,7 @@ const User = require("../model/User");
 
 //GET BY USER ID
 router.get("/", verify, async (req, res) => {
-  const pets = await Pet.find({ user: req.body.user });
+  const pets = await Pet.findOne({ user: req.body.user }).populate("feedings");
   res.send(pets);
 });
 
@@ -14,13 +14,26 @@ router.post("/create", verify, async (req, res) => {
   const user = await User.findOne({ _id: req.body.user });
   if (!user) return res.status(400).send("User Id not found");
 
-  const pet = new Pet({
+  const petExist = await Pet.findOne({
     name: req.body.name,
     user: user.id
   });
 
+  if (petExist) return res.status(400).send("Pet already exist");
+
   try {
+    const pet = new Pet({
+      name: req.body.name,
+      user: req.body.user
+    });
+
     const savedPet = await pet.save();
+
+    const user = await User.findById({ _id: req.body.user });
+    user.pets.push(savedPet);
+
+    await user.save();
+
     res.send(savedPet);
   } catch (err) {
     console.log(err);

@@ -20,11 +20,12 @@ const feedingSchema = new mongoose.Schema({
   updated: {
     type: Date,
     default: Date.now
-  },
-  pet: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Pet"
   }
+  // pet: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Pet",
+  //   required: true
+  // }
 });
 
-module.exports = mongoose.model("Feedings", feedingSchema);
+module.exports = mongoose.model("Feeding", feedingSchema);

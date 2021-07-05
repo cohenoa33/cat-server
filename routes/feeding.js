@@ -23,6 +23,12 @@ router.post("/create", verify, async (req, res) => {
 
   try {
     const savedFeeding = await feeding.save();
+
+    const pet = await Pet.findById({ _id: req.body.pet });
+    pet.feedings.push(savedFeeding);
+
+    await pet.save();
+
     res.send(savedFeeding);
   } catch (err) {
     console.log(err);
