@@ -4,7 +4,9 @@ const Pet = require("../model/Pet");
 const User = require("../model/User");
 
 //GET BY USER ID
-router.get("/:_id", verify, async (req, res) => {
+
+//TODO: add verify method after getting login
+router.get("/:_id", async (req, res) => {
   const pet = await Pet.findOne({ _id: req.params }).populate("feedings");
   res.send(pet);
 });
