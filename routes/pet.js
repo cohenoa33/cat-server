@@ -4,9 +4,9 @@ const Pet = require("../model/Pet");
 const User = require("../model/User");
 
 //GET BY USER ID
-router.get("/", verify, async (req, res) => {
-  const pets = await Pet.findOne({ user: req.body.user }).populate("feedings");
-  res.send(pets);
+router.get("/:_id", verify, async (req, res) => {
+  const pet = await Pet.findOne({ _id: req.params }).populate("feedings");
+  res.send(pet);
 });
 
 //CREATE

@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+var cors = require("cors");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -21,6 +22,7 @@ const petsRoute = require("./routes/pet");
 const feedingRoute = require("./routes/feeding");
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // Route Middleware
