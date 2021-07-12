@@ -24,6 +24,8 @@ const feedingRoute = require("./routes/feeding");
 // Middleware
 app.use(cors());
 app.use(express.json());
+// use the express-static middleware
+app.use(express.static("public"));
 
 // Route Middleware
 app.use("/api", userRote);
