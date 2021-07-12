@@ -3,9 +3,13 @@ const User = require("../model/User");
 
 //GET Users
 router.get("/", async (req, res) => {
-  const users = await User.find().populate({ path: "pets", select: "name" });
+  try {
+    const users = await User.find().populate({ path: "pets", select: "name" });
 
-  res.send(users);
+    res.send(users);
+  } catch (err) {
+    throw new Error(err.message);
+  }
 });
 
 module.exports = router;
